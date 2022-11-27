@@ -9,7 +9,7 @@ abstract class Characters {
     image1!: HTMLImageElement;
     image2!: HTMLImageElement;
     image3!: HTMLImageElement;
-image4!: HTMLImageElement;
+    image4!: HTMLImageElement;
     constructor(
         dimensions: dimensions,
         position: position,
