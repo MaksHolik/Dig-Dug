@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Atari Classic";
+  src: local("Atari"), url("../public/AtariClassic.ttf")
+}
+* {
+  font-family: AtariClassic ;
+}
+body {
+  background-color: black;
+  color: white;
+}
+canvas{
+  border: 2px solid grey;
+  font-family: "Atari";
+}
