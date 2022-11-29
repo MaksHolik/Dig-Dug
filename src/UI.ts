@@ -24,7 +24,7 @@ class UI {
         this.boy = await createImage("./boy.png");
     };
 
-    draw = () => {
+    draw = (round: string) => {
         new Text({
             color: "red",
             size: 30,
@@ -64,7 +64,7 @@ class UI {
             color: "white",
             size: 30,
             position: { left: 630, top: 865 },
-            text: `${this.round}`,
+            text: `${round}`,
             ctx: this.ctx,
         });
         for (let i = 0; i < this.hpCounter; i++) {
