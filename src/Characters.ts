@@ -14,6 +14,14 @@ abstract class Characters {
   image2_1!: HTMLImageElement;
   image3_1!: HTMLImageElement;
   image4_1!: HTMLImageElement;
+  arrowBeginningLeft!: HTMLImageElement;
+  arrowBeginningRight!: HTMLImageElement;
+  arrowBeginningDown!: HTMLImageElement;
+  arrowBeginningUp!: HTMLImageElement;
+  arrowRestLeft!: HTMLImageElement;
+  arrowRestRight!: HTMLImageElement;
+  arrowRestDown!: HTMLImageElement;
+  arrowRestUp!: HTMLImageElement;
   constructor(
     dimensions: dimensions,
     position: position,
@@ -35,9 +43,18 @@ abstract class Characters {
     this.image2_1 = await createImage("./boy2_1.png");
     this.image3_1 = await createImage("./boy3_1.png");
     this.image4_1 = await createImage("./boy4_1.png");
+    this.arrowBeginningLeft = await createImage("./arrowBeginningLeft.png");
+    this.arrowBeginningRight = await createImage("./arrowBeginningRight.png");
+    this.arrowBeginningDown = await createImage("./arrowBeginningDown.png");
+    this.arrowBeginningUp = await createImage("./arrowBeginningUp.png");
+    this.arrowRestLeft = await createImage("./arrowRestLeft.png");
+    this.arrowRestRight = await createImage("./arrowRestRight.png");
+    this.arrowRestDown = await createImage("./arrowRestDown.png");
+    this.arrowRestUp = await createImage("./arrowRestUp.png");
+    console.log("every sprite loaded");
+    
   };
   drawBoy = async (boolean: boolean, direction: string) => {
-    console.log(boolean);
     
     let boyy = this.image1;
     if (direction == "ArrowUp") {
