@@ -49,47 +49,102 @@ class Player extends Characters {
         const posX = this.position.x + this.dimensions.height / 2;
         const posY = this.position.y + this.dimensions.width / 2;
         if (this.lastKey == "z") {
+            let data = this.ctx?.getImageData(
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            ).data;
+            let currentX = 0;
+            let currentY = 0;
             if (this.direction == "ArrowLeft") {
+                for (let i = 1; i <= 3; i++) {
+                    currentX = posX - this.dimensions.width * i;
+                    currentY = posY;
+                    let pixelTab = this.getPixelColor(
+                        currentX,
+                        currentY,
+                        data!
+                    );
+                    if (
+                        pixelTab[0] === 0 &&
+                        pixelTab[1] === 0 &&
+                        pixelTab[2] === 0
+                    ) {
+                        this.ctx!.drawImage(
+                            this.arrowRestLeft,
+                            currentX,
+                            currentY,
+                            this.dimensions.width,
+                            this.dimensions.height / 3
+                        );
+                    } else {
+                        break;
+                    }
+                }
                 this.ctx!.drawImage(
                     this.arrowBeginningLeft,
-                    posX - this.dimensions.width,
-                    posY ,
+                    currentX,
+                    currentY - 14,
                     this.dimensions.width,
-                    this.dimensions.height /3
+                    this.dimensions.height
                 );
-                // this.direction = "ArrowLeft";
-            }
-            else if (this.direction == "ArrowRight") {
+            } else if (this.direction == "ArrowRight") {
+                for (let i = 1; i <= 3; i++) {
+                    currentX = posX + this.dimensions.width * i;
+                    currentY = posY;
+                    let pixelTab = this.getPixelColor(
+                        currentX,
+                        currentY,
+                        data!
+                    );
+                    if (
+                        pixelTab[0] === 0 &&
+                        pixelTab[1] === 0 &&
+                        pixelTab[2] === 0
+                    ) {
+                        this.ctx!.drawImage(
+                            this.arrowRestRight,
+                            currentX - this.dimensions.width,
+                            currentY - 14,
+                            this.dimensions.width,
+                            this.dimensions.height
+                        );
+                    } else {
+                        break;
+                    }
+                }
                 this.ctx!.drawImage(
                     this.arrowBeginningRight,
-                    posX + this.dimensions.width / 3,
-                    posY - this.dimensions.height / 3,
+                    currentX - this.dimensions.width,
+                    currentY - 14,
                     this.dimensions.width,
                     this.dimensions.height
                 );
-                // this.direction = "ArrowRight";
-            }
-            else if (this.direction== "ArrowUp") {
+            } else if (this.direction == "ArrowUp") {
                 this.ctx!.drawImage(
                     this.arrowBeginningUp,
-                    posX - this.dimensions.width / 2,
-                    posY - (this.dimensions.height + (this.dimensions.height / 3)),
+                    currentX - 14,
+                    currentY - this.dimensions.height,
                     this.dimensions.width,
                     this.dimensions.height
                 );
-                // this.direction = "ArrowUp";
-            }
-            else if (this.direction == "ArrowDown") {
+            } else if (this.direction == "ArrowDown") {
                 this.ctx!.drawImage(
                     this.arrowBeginningDown,
                     posX - this.dimensions.width / 3,
-                    posY + (this.dimensions.height - (this.dimensions.height / 2)),
+                    posY +
+                        (this.dimensions.height - this.dimensions.height / 2),
                     this.dimensions.width,
                     this.dimensions.height
                 );
-                // this.direction = "ArrowDown";
             }
         }
+    };
+
+    getPixelColor = (x: number, y: number, data: Uint8ClampedArray) => {
+        const red = y * (this.canvas.width * 4) + x * 4;
+        return [data[red], data[red + 1], data[red + 2], data[red + 3]];
     };
 
     movePlayer = () => {
@@ -101,8 +156,7 @@ class Player extends Characters {
             if (!this.interval) {
                 this.interval = setInterval(() => {
                     this.change = !this.change;
-                    if(this.lastKey != "z")
-                    this.direction = this.lastKey;
+                    if (this.lastKey != "z") this.direction = this.lastKey;
                 }, 100);
             }
             if (!this.attacks) {
@@ -130,7 +184,6 @@ class Player extends Characters {
                     case "z":
                         this.attacks = true;
                         this.lastKey = "z";
-                        this.attack();
                         break;
                 }
             }
@@ -205,7 +258,7 @@ class Player extends Characters {
             this.position.x += this.velocity.x;
         }
         this.drawBoy(this.change, this.direction);
-        this.attack()
+        this.attack();
     }
 }
 export default Player;

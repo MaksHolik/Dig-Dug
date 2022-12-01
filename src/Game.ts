@@ -19,36 +19,36 @@ class Game {
   mapLoad: Map;
 
   constructor() {
-    this.map = levels.levels.map1.map;
-    this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    const ctx = this.canvas.getContext("2d");
-    if (!ctx) throw new Error("missing ctx");
-    this.ctx = ctx;
+      this.map = levels.levels.map1.map;
+      this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
+      const ctx = this.canvas.getContext("2d", { willReadFrequently : true});
+      if (!ctx) throw new Error("missing ctx");
+      this.ctx = ctx;
 
-    const small = this.canvas.getContext("2d");
-    if (!small) throw new Error("missing smallCtx");
-    this.small = small;
+      const small = this.canvas.getContext("2d");
+      if (!small) throw new Error("missing smallCtx");
+      this.small = small;
 
-    const hp = this.canvas.getContext("2d");
-    if (!hp) throw new Error("missing hpCtx");
-    this.hp = hp;
+      const hp = this.canvas.getContext("2d");
+      if (!hp) throw new Error("missing hpCtx");
+      this.hp = hp;
 
-    this.ctx!.imageSmoothingEnabled = false;
-    this.small!.imageSmoothingEnabled = false;
+      this.ctx!.imageSmoothingEnabled = false;
+      this.small!.imageSmoothingEnabled = false;
     this.hp!.imageSmoothingEnabled = false;
 
-    this.ui = new UI(this.ctx, this.points, this.hp, this.hpCounter);
-    this.mapLoad = new Map(this.small);
+      this.ui = new UI(this.ctx, this.points, this.hp, this.hpCounter);
+      this.mapLoad = new Map(this.small);
 
-    this.player = new Player(
-      { width: 46, height: 46 },
-      { x: 288, y: 432 },
-      this.canvas,
-      this.ctx,
-      "./boy.png"
-    );
-    if (this.player) console.log("istnieje");
-    this.newGame("map1");
+      this.player = new Player(
+          { width: 46, height: 46 },
+          { x: 288, y: 432 },
+          this.canvas,
+          this.ctx,
+          "./boy.png"
+      );
+      if (this.player) console.log("istnieje");
+      this.newGame("map1");
   }
   loadFont = async () => {
     let font = new FontFace("Atari", "url(/AtariClassic.ttf)");
