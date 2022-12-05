@@ -47,6 +47,7 @@ class Game {
             this.ctx,
             "./boy.png"
         );
+        
         if (this.player) console.log("istnieje");
         this.newGame("map1");
     }

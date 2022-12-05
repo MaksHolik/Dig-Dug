@@ -22,6 +22,10 @@ abstract class Characters {
   arrowRestRight!: HTMLImageElement;
   arrowRestDown!: HTMLImageElement;
   arrowRestUp!: HTMLImageElement;
+  theRock1!: HTMLImageElement
+  theRock2!: HTMLImageElement
+  theRock3!: HTMLImageElement
+  theRock4!: HTMLImageElement
   constructor(
     dimensions: dimensions,
     position: position,
@@ -51,6 +55,10 @@ abstract class Characters {
     this.arrowRestRight = await createImage("./arrowRestRight.png");
     this.arrowRestDown = await createImage("./arrowRestDown.png");
     this.arrowRestUp = await createImage("./arrowRestUp.png");
+    this.theRock1 = await createImage("./theRock1.png")
+    this.theRock2 = await createImage("./theRock2.png")
+    this.theRock3 = await createImage("./theRock3.png")
+    this.theRock4 = await createImage("./theRock4.png")
     console.log("every sprite loaded");
     
   };
@@ -75,5 +83,8 @@ abstract class Characters {
       this.dimensions.height
     );
   };
+  drawRocks = async () => {
+    
+  }
 }
 export default Characters;
