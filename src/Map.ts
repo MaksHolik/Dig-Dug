@@ -257,7 +257,7 @@ class Map {
             map[j][i] == 0 &&
             (map[j][i - 1] == 1 || map[j][i - 1] == 3) &&
             (map[j][i + 1] == 1 || map[j][i + 1] == 3) &&
-            map[j - 1][i] == 1
+            map[j - 1][i] == 1 // tutaj skończyłem
           ) {
             this.small!.drawImage(
               this.freeBottom,
