@@ -15,13 +15,10 @@ class Rock extends Characters {
   ) {
     super(dimensions, position, ctx, url);
     this.url = url;
-    this.canvas = canvas;;
+    this.canvas = canvas;
   }
-  attack = async () => {
-    
-  };
+  attack = async () => {};
 
-  update(): void {
-  }
+  update(): void {}
 }
 export default Rock;

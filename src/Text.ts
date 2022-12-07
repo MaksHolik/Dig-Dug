@@ -19,5 +19,4 @@ class Text {
         this.ctx?.fillText(this.text, this.position.left, this.position.top)
     }
 }
-
 export default Text
