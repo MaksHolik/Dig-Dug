@@ -127,8 +127,8 @@ class Map {
             (!map[j][i - 1] || map[j][i - 1] == 0) &&
             (!map[j][i + 1] || map[j][i + 1] == 0) &&
             (!map[j + 1] || map[j + 1][i] == 0) &&
-            ((!map[j - 1] || map[j - 1][i]) == 1 ||
-              (!map[j - 1] || map[j - 1][i]) == 3)
+            (!map[j - 1] || map[j - 1][i]) == 1 &&
+            (!map[j - 1] || map[j - 1][i]) != 3
           ) {
             this.small!.drawImage(
               this.onlyTop,
@@ -138,12 +138,12 @@ class Map {
               cellSize * scale
             );
           } else if (
-            map[j][i] == 0 &&
+            (map[j][i] == 0,
             (!map[j][i - 1] || map[j][i - 1] == 0) &&
-            (!map[j][i + 1] || map[j][i + 1] == 0) &&
-            ((!map[j + 1] || map[j + 1][i]) == 1 ||
-              (!map[j + 1] || map[j + 1][i]) == 3) &&
-            (!map[j - 1] || map[j - 1][i] == 0)
+              (!map[j][i + 1] || map[j][i + 1] == 0) &&
+              ((!map[j + 1] || map[j + 1][i]) == 1 ||
+                (!map[j + 1] || map[j + 1][i]) == 3) &&
+              (!map[j - 1] || map[j - 1][i] == 0))
           ) {
             this.small!.drawImage(
               this.onlyBottom,
@@ -257,7 +257,8 @@ class Map {
             map[j][i] == 0 &&
             (map[j][i - 1] == 1 || map[j][i - 1] == 3) &&
             (map[j][i + 1] == 1 || map[j][i + 1] == 3) &&
-            map[j - 1][i] == 1 // tutaj skończyłem
+            (map[j - 1][i] == 1 || map[j - 1][i] == 3) &&
+            map[j + 1][i] == 0 // tutaj skończyłem
           ) {
             this.small!.drawImage(
               this.freeBottom,
@@ -270,8 +271,14 @@ class Map {
             map[j][i] == 0 &&
             (!map[j + 1] || map[j + 1][i] == 1) &&
             (!map[j - 1] || map[j - 1][i] == 0) &&
-            (!map[j][i + 1] || map[j][i - 1] == 1) &&
-            (!map[j][i + 1] || map[j][i] + 1 == 1)
+            (!map[j][i + 1] ||
+              map[j][i - 1] == 1 ||
+              !map[j][i + 1] ||
+              map[j][i - 1] == 3) &&
+            (!map[j][i + 1] ||
+              map[j][i] + 1 == 1 ||
+              !map[j][i + 1] ||
+              map[j][i] + 1 == 3)
           ) {
             this.small!.drawImage(
               this.freeTop,
@@ -284,10 +291,10 @@ class Map {
             map[j - 1] &&
             map[j + 1] &&
             map[j][i] == 0 &&
-            map[j][i - 1] == 1 &&
+            (map[j][i - 1] == 1 || map[j][i - 1] == 3) &&
             map[j][i + 1] == 0 &&
-            map[j + 1][i] == 1 &&
-            map[j - 1][i] == 1
+            (map[j + 1][i] == 1 || map[j + 1][i] == 3) &&
+            (map[j - 1][i] == 1 || map[j - 1][i] == 3)
           ) {
             this.small!.drawImage(
               this.freeRight,
@@ -298,10 +305,19 @@ class Map {
             );
           } else if (
             map[j][i] == 0 &&
-            (!map[j + 1] || map[j + 1][i] == 1) &&
-            (!map[j - 1] || map[j - 1][i] == 1) &&
+            (!map[j + 1] ||
+              map[j + 1][i] == 1 ||
+              !map[j + 1] ||
+              map[j + 1][i] == 3) &&
+            (!map[j - 1] ||
+              map[j - 1][i] == 1 ||
+              !map[j - 1] ||
+              map[j - 1][i] == 3) &&
             (!map[j][i + 1] || map[j][i - 1] == 0) &&
-            (!map[j][i + 1] || map[j][i] + 1 == 1)
+            (!map[j][i + 1] ||
+              map[j][i] + 1 == 1 ||
+              !map[j][i + 1] ||
+              map[j][i] + 1 == 3)
           ) {
             this.small!.drawImage(
               this.freeLeft,
@@ -314,7 +330,10 @@ class Map {
             map[j][i] == 0 &&
             (!map[j][i - 1] || map[j][i - 1] == 0) &&
             (!map[j][i + 1] || map[j][i + 1] == 0) &&
-            (!map[j + 1] || map[j + 1][i] == 1) &&
+            (!map[j + 1] ||
+              map[j + 1][i] == 1 ||
+              !map[j + 1] ||
+              map[j + 1][i] == 3) &&
             map[j - 1][i] == 2
           ) {
             this.small!.drawImage(

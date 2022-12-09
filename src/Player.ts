@@ -104,7 +104,7 @@ class Player extends Characters {
           currentY - 14,
           this.dimensions.width,
           this.dimensions.height
-        ); 
+        );
       } else if (this.direction == "ArrowUp") {
         for (let i = 1; i < 3; i++) {
           currentX = posX;
@@ -137,7 +137,7 @@ class Player extends Characters {
           if (pixelTab[0] === 0 && pixelTab[1] === 0 && pixelTab[2] === 0) {
             this.ctx!.drawImage(
               this.arrowRestDown,
-              currentX - this.dimensions.height /4,
+              currentX - this.dimensions.height / 4,
               currentY - this.dimensions.height,
               this.dimensions.width,
               this.dimensions.height
@@ -148,7 +148,7 @@ class Player extends Characters {
         }
         this.ctx!.drawImage(
           this.arrowBeginningDown,
-          currentX - this.dimensions.width/3,
+          currentX - this.dimensions.width / 3,
           currentY - this.dimensions.height,
           this.dimensions.width,
           this.dimensions.height
