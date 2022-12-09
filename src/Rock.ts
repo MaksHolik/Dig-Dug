@@ -1,6 +1,5 @@
 import { dimensions, position } from "./interfaces";
 import Characters from "./Characters";
-import Game from "./Game";
 
 class Rock extends Characters {
     canvas: HTMLCanvasElement;

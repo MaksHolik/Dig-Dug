@@ -1,7 +1,5 @@
 import { dimensions, position } from "./interfaces";
 import Characters from "./Characters";
-import { rectCollision } from "./collision";
-import Game from "./Game";
 
 class Player extends Characters {
     newKeys: {
