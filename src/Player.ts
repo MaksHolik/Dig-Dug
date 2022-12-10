@@ -1,5 +1,8 @@
 import { dimensions, position } from "./interfaces";
 import Characters from "./Characters";
+import UI from "./UI";
+import Game from "./Game";
+import Enemy from "./Enemy";
 
 class Player extends Characters {
     newKeys: {
@@ -46,10 +49,10 @@ class Player extends Characters {
         };
         this.movePlayer();
     }
-    attack = async (eneMap: number[][]) => {
+    attack = async (eneMap: number[][], ui: UI, enemies: Enemy[]) => {
         const posX = this.position.x + this.dimensions.height / 2;
         const posY = this.position.y + this.dimensions.width / 2;
-        const enePosX = Math.floor 
+
         if (this.lastKey == "z") {
             let data = this.ctx?.getImageData(
                 0,
@@ -61,6 +64,19 @@ class Player extends Characters {
             let currentY = 0;
             if (this.direction == "ArrowLeft") {
                 for (let i = 1; i <= 3; i++) {
+                    const enePosX = Math.floor(
+                        (this.position.x - 3 * this.dimensions.width) / 48
+                    );
+                    const enePosY = Math.floor(this.position.y / 48);
+                    const myPosX = Math.floor(this.position.x / 48);
+                    enemies.forEach((e) => {
+                        const { x, y } = e.getPos();
+                        if (enePosX < x && enePosY == y && x < myPosX) {
+                            eneMap[enePosY][enePosX + i] = 0;
+                            enemies.splice(enemies.indexOf(e), 1);
+                            ui.points += 500;
+                        }
+                    });
                     currentX = posX - this.dimensions.width * i;
                     currentY = posY;
                     let pixelTab = this.getPixelColor(
@@ -68,6 +84,7 @@ class Player extends Characters {
                         currentY,
                         data!
                     );
+
                     if (
                         pixelTab[0] === 0 &&
                         pixelTab[1] === 0 &&
@@ -93,6 +110,19 @@ class Player extends Characters {
                 );
             } else if (this.direction == "ArrowRight") {
                 for (let i = 1; i <= 3; i++) {
+                    const enePosX = Math.floor(
+                        (this.position.x - 3 * this.dimensions.width) / 48
+                    );
+                    const enePosY = Math.floor(this.position.y / 48);
+                    const myPosX = Math.floor(this.position.x / 48);
+                    enemies.forEach((e) => {
+                        const { x, y } = e.getPos();
+                        if (enePosX < x && enePosY == y && x > myPosX) {
+                            eneMap[enePosY][enePosX + i] = 0;
+                            enemies.splice(enemies.indexOf(e), 1);
+                            ui.points += 500;
+                        }
+                    });
                     currentX = posX + this.dimensions.width * i;
                     currentY = posY;
                     let pixelTab = this.getPixelColor(
@@ -125,6 +155,19 @@ class Player extends Characters {
                 );
             } else if (this.direction == "ArrowUp") {
                 for (let i = 1; i < 3; i++) {
+                    const enePosX = Math.floor(this.position.x / 48);
+                    const enePosY = Math.floor(
+                        (this.position.y - 3 * this.dimensions.width) / 48
+                    );
+                    const myPosY = Math.floor(this.position.y / 48);
+                    enemies.forEach((e) => {
+                        const { x, y } = e.getPos();
+                        if (enePosX == x && enePosY < y && y < myPosY) {
+                            eneMap[enePosY + i][enePosX] = 0;
+                            enemies.splice(enemies.indexOf(e), 1);
+                            ui.points += 500;
+                        }
+                    });
                     currentX = posX;
                     currentY = posY - this.dimensions.height * i;
                     let pixelTab = this.getPixelColor(
@@ -157,6 +200,19 @@ class Player extends Characters {
                 );
             } else if (this.direction == "ArrowDown") {
                 for (let i = 1; i <= 3; i++) {
+                    const enePosX = Math.floor(this.position.x / 48);
+                    const enePosY = Math.floor(
+                        (this.position.y - 3 * this.dimensions.width) / 48
+                    );
+                    const myPosY = Math.floor(this.position.y / 48);
+                    enemies.forEach((e) => {
+                        const { x, y } = e.getPos();
+                        if (enePosX == x && enePosY < y && y > myPosY) {
+                            eneMap[enePosY + i][enePosX] = 0;
+                            enemies.splice(enemies.indexOf(e), 1);
+                            ui.points += 500;
+                        }
+                    });
                     currentX = posX;
                     currentY = posY + this.dimensions.height * i;
                     let pixelTab = this.getPixelColor(
@@ -188,6 +244,7 @@ class Player extends Characters {
                     this.dimensions.height
                 );
             }
+            // tu śmieciu
         }
     };
 
@@ -272,7 +329,7 @@ class Player extends Characters {
         });
     };
 
-    update(eneMap: number[][]): void {
+    update(eneMap: number[][], ui: UI, enemies: Enemy[]): void {
         let key = this.lastKey;
         let eneX = Math.floor(this.position.x / 48);
         let eneY = Math.floor(this.position.y / 48);
@@ -307,21 +364,20 @@ class Player extends Characters {
                 this.velocity.x = 0;
                 this.velocity.y = 0;
             }
-            if (eneMap[eneY + 1][eneX] == 3) {
-                if(this.velocity.y >0)
-                this.velocity.y = 0;
+            if (eneMap[eneY + 1] && eneMap[eneY + 1][eneX] == 3) {
+                if (this.velocity.y > 0) this.velocity.y = 0;
             }
-            if (eneMap[eneY][eneX +1] == 3) {
-                if (this.velocity.x > 0) this.velocity.x = 0; 
+            if (eneMap[eneY][eneX + 1] == 3) {
+                if (this.velocity.x > 0) this.velocity.x = 0;
             }
-            if (eneMap[eneY][eneX2 - 1] == 3) { 
+            if (eneMap[eneY][eneX2 - 1] == 3) {
                 if (this.velocity.x < 0) this.velocity.x = 0;
             }
             this.position.y += this.velocity.y;
             this.position.x += this.velocity.x;
         }
         this.drawBoy(this.change, this.direction);
-        this.attack(eneMap);
+        this.attack(eneMap, ui, enemies);
     }
 }
 export default Player;

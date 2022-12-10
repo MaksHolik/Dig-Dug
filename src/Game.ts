@@ -156,15 +156,31 @@ class Game {
         }
         return true;
     }
+    checkIfNextLevel() {
+        console.log(this.enemies);
+        //do naprawienia
+        if (this.enemies.length == 0) {
+            this.newGame("map2")
+            this.eneMap = levels.levels.map2.entity;
+            this.map = levels.levels.map2.map;
+            this.level = levels.levels.map2.source;
+            this.ui.round++;
+            return true
+        }
+        return false
+       
+    }
     render = () => {
         this.ctx!.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.mapLoad.draw(this.map);
         this.ui.draw(this.roundNumber);
-        this.player.update(this.eneMap);
+
         this.rocks.forEach((e) => e.update(this.map, this.eneMap));
         this.enemies = this.enemies.filter(
             (e) => !e.update(this.eneMap, this.ui)
         );
+        this.player.update(this.eneMap, this.ui, this.enemies);
+
         this.searchForCollision();
 
         this.map[Math.floor(this.player.position.y / 48)][
@@ -173,6 +189,7 @@ class Game {
         this.map[Math.floor((this.player.position.y + 47) / 48)][
             Math.floor((this.player.position.x + 47) / 48)
         ] = 0;
+        if(this.checkIfNextLevel()) requestAnimationFrame(() => this.render())
         if (this.checkIfGameOver()) requestAnimationFrame(() => this.render());
     };
 }

@@ -22,7 +22,7 @@ class Enemy extends Characters {
         this.attacks = false;
         this.hp = 1;
         this.velocity = { x: 0, y: 0 };
-        this.movePlayer();
+        
     }
     attack = async () => {
         const posX = this.position.x + this.dimensions.height / 2;
@@ -34,11 +34,14 @@ class Enemy extends Characters {
         return [data[red], data[red + 1], data[red + 2], data[red + 3]];
     };
 
-    movePlayer = () => {};
+    getPos = () => {
+        const x = Math.floor(this.position.x / 48);
+        const y = Math.floor(this.position.y / 48);
+        return {x, y}
+    };
 
     update(eneMap: number[][], ui: UI) {
-        const posX = Math.floor(this.position.x / 48)
-        const posY = Math.floor(this.position.y / 48)
+        
         if (this.hp > 0) {
             this.drawEnemy();
         } else {
