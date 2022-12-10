@@ -7,7 +7,8 @@ class Enemy extends Characters {
     canvas: HTMLCanvasElement;
     attacks: boolean;
     url: string;
-    hp: number
+    hp: number;
+
     constructor(
         dimensions: dimensions,
         position: position,
@@ -19,7 +20,7 @@ class Enemy extends Characters {
         this.url = url;
         this.canvas = canvas;
         this.attacks = false;
-        this.hp = 1
+        this.hp = 1;
         this.velocity = { x: 0, y: 0 };
         this.movePlayer();
     }
@@ -35,11 +36,16 @@ class Enemy extends Characters {
 
     movePlayer = () => {};
 
-    update(): void {
+    update(eneMap: number[][], ui: UI) {
+        const posX = Math.floor(this.position.x / 48)
+        const posY = Math.floor(this.position.y / 48)
         if (this.hp > 0) {
             this.drawEnemy();
+        } else {
+            ui.points += 1000;
+            return true
         }
-        
+        return false
     }
 }
 export default Enemy;

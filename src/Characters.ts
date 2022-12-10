@@ -85,9 +85,21 @@ abstract class Characters {
             this.dimensions.height
         );
     };
-    drawRocks = async () => {
+    drawRocks = async (change: number) => {
+        let rockk = this.theRock1
+        if (change == 4) {
+            rockk = this.theRock1
+        } else if (change == 3) {
+            rockk = this.theRock2
+        }else if (change == 2) {
+            rockk = this.theRock3
+        }else if (change ==1) {
+            rockk = this.theRock4
+        }
+        
+        
        this.ctx!.drawImage(
-           this.theRock1,
+           rockk,
            this.position.x,
            this.position.y,
            this.dimensions.width,

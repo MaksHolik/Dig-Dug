@@ -13,13 +13,11 @@ class Game {
     hp: CanvasRenderingContext2D;
     hpCounter: number = 2;
     map: number[][] = [];
+    eneMap: number[][] = [];
     rocks: Rock[] = [];
+    enemies: Enemy[] = [];
     round: string = "";
     player: any;
-    enemy1: any;
-    enemy2: any;
-    enemy3: any;
-    enemy4: any;
     background: any;
     points: number = 0;
     ui: UI;
@@ -31,6 +29,7 @@ class Game {
 
     constructor() {
         this.map = levels.levels.map1.map;
+        this.eneMap = levels.levels.map1.entity;
         this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
         const ctx = this.canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) throw new Error("missing ctx");
@@ -60,37 +59,25 @@ class Game {
             "./boy.png",
             this.hpCounter
         );
-        this.enemy1 = new Enemy(
-            { width: 46, height: 46 },
-            { x: 470, y: 192 },
-            this.canvas,
-            this.ctx,
-            "./enemy1.png"
-        );
-        this.enemy2 = new Enemy(
-            { width: 44, height: 44 },
-            { x: 50, y: 294 },
-            this.canvas,
-            this.ctx,
-            "./enemy1.png"
-        );
-        this.enemy3 = new Enemy(
-            { width: 44, height: 44 },
-            { x: 146, y: 580 },
-            this.canvas,
-            this.ctx,
-            "./enemy1.png"
-        );
-        this.enemy4 = new Enemy(
-            { width: 46, height: 46 },
-            { x: 434, y: 628 },
-            this.canvas,
-            this.ctx,
-            "./enemy1.png"
-        );
-        for (let i = 0; i < this.map[0].length; i++) {
-            for (let j = 0; j < this.map.length; j++) {
-                if (this.map[j][i] === 3) {
+
+        for (let i = 0; i < this.eneMap[0].length; i++) {
+            for (let j = 0; j < this.eneMap.length; j++) {
+                if (this.eneMap[j][i] === 4) {
+                    this.enemies.push(
+                        new Enemy(
+                            { width: 48, height: 48 },
+                            { x: i * 48, y: j * 48 },
+                            this.canvas,
+                            this.ctx,
+                            "./enemy1.png"
+                        )
+                    );
+                }
+            }
+        }
+        for (let i = 0; i < this.eneMap[0].length; i++) {
+            for (let j = 0; j < this.eneMap.length; j++) {
+                if (this.eneMap[j][i] === 3) {
                     this.rocks.push(
                         new Rock(
                             { width: 48, height: 48 },
@@ -103,7 +90,6 @@ class Game {
                 }
             }
         }
-        console.log(this.map);
 
         if (this.player) console.log("istnieje");
         this.newGame("map1");
@@ -118,12 +104,10 @@ class Game {
         await this.loadFont();
 
         await this.player.init();
-        await this.enemy1.init();
-        await this.enemy2.init();
-        await this.enemy3.init();
-        await this.enemy4.init();
+
         await this.mapLoad.init();
         await Promise.all(this.rocks.map((e) => e.init()));
+        await Promise.all(this.enemies.map((e) => e.init()));
         await this.ui.init();
         this.ui.hpCounter = 2;
         this.roundNumber = levels.levels.map1.source.slice(-1);
@@ -132,70 +116,55 @@ class Game {
         this.ctx!.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.render();
     };
-
-    searchForCollision = () => {
+    backToStart: any = async () => {
+        this.player.position.x = 288;
+        this.player.position.y = 432;
+        this.ui.hpCounter--;
+    };
+    searchForCollision = async () => {
         this.checkIfGameOver();
-        //  { x: 288, y: 432 },
-        if (rectCollision(this.player, this.enemy1)) {
-            this.player.position.x = 288;
-            this.player.position.y = 432;
-            this.enemy1.hp--;
-            this.ui.hpCounter--;
-            this.ui.points += 100;
-            console.log("enemy one hit");
 
-            //UIController.getInstance().updateHp(this.player.hp);
-        }
-        if (rectCollision(this.player, this.enemy2)) {
-            this.player.position.x = 288;
-            this.player.position.y = 432;
-            this.enemy2.hp--;
-            this.ui.hpCounter--;
-            this.ui.points += 100;
-            //UIController.getInstance().updateHp(this.player.hp);
-        }
-        if (rectCollision(this.player, this.enemy3)) {
-            this.player.position.x = 288;
-            this.player.position.y = 432;
-            this.enemy3.hp--;
-            this.ui.hpCounter--;
-            this.ui.points += 100;
-            //UIController.getInstance().updateHp(this.player.hp);
-        }
-        if (rectCollision(this.player, this.enemy4)) {
-            this.player.position.x = 288;
-            this.player.position.y = 432;
-            this.enemy4.hp--;
-            this.ui.hpCounter--;
-            this.ui.points += 100;
-            //UIController.getInstance().updateHp(this.player.hp);
-        }
         for (let i = 0; i < this.rocks.length; i++) {
             const element = this.rocks[i];
+            if (this.rocks.some((e) => e.falls))
+                if (rectCollision(this.player, element)) {
+                    this.backToStart();
+                    break;
+                }
+        }
+        for (let i = 0; i < this.enemies.length; i++) {
+            const element = this.enemies[i];
             if (rectCollision(this.player, element)) {
-                this.player.position.x = 288;
-                this.player.position.y = 432;
-                this.ui.hpCounter--;
+                this.backToStart();
                 break;
-                //UIController.getInstance().updateHp(this.player.hp);
+            }
+        }
+        for (let i = 0; i < this.enemies.length; i++) {
+            const element = this.enemies[i];
+            for (let j = 0; j < this.rocks.length; j++) {
+                if (rectCollision(this.rocks[j], element)) {
+                    element.hp--;
+                    break;
+                }
             }
         }
     };
     checkIfGameOver() {
         if (this.ui.hpCounter == 0) {
-            return this.newGame(this.level);
+            location.reload();
+            return false;
         }
+        return true;
     }
     render = () => {
         this.ctx!.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.mapLoad.draw(this.map);
         this.ui.draw(this.roundNumber);
-        this.enemy1.update();
-        this.enemy2.update();
-        this.enemy3.update();
-        this.enemy4.update();
-        this.player.update();
-        this.rocks.forEach((e) => e.update(this.map));
+        this.player.update(this.eneMap);
+        this.rocks.forEach((e) => e.update(this.map, this.eneMap));
+        this.enemies = this.enemies.filter(
+            (e) => !e.update(this.eneMap, this.ui)
+        );
         this.searchForCollision();
 
         this.map[Math.floor(this.player.position.y / 48)][
@@ -204,7 +173,7 @@ class Game {
         this.map[Math.floor((this.player.position.y + 47) / 48)][
             Math.floor((this.player.position.x + 47) / 48)
         ] = 0;
-        requestAnimationFrame(() => this.render());
+        if (this.checkIfGameOver()) requestAnimationFrame(() => this.render());
     };
 }
 new Game();

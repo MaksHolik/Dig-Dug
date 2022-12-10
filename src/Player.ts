@@ -22,7 +22,7 @@ class Player extends Characters {
         position: position,
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D | null,
-      url: string,
+        url: string,
         hp: number
     ) {
         super(dimensions, position, ctx, url);
@@ -46,9 +46,10 @@ class Player extends Characters {
         };
         this.movePlayer();
     }
-    attack = async () => {
+    attack = async (eneMap: number[][]) => {
         const posX = this.position.x + this.dimensions.height / 2;
         const posY = this.position.y + this.dimensions.width / 2;
+        const enePosX = Math.floor 
         if (this.lastKey == "z") {
             let data = this.ctx?.getImageData(
                 0,
@@ -270,9 +271,12 @@ class Player extends Characters {
             }
         });
     };
-  
-  update(): void {
+
+    update(eneMap: number[][]): void {
         let key = this.lastKey;
+        let eneX = Math.floor(this.position.x / 48);
+        let eneY = Math.floor(this.position.y / 48);
+        let eneX2 = Math.ceil(this.position.x / 48);
         this.velocity.x = 0;
         this.velocity.y = 0;
         if (this.newKeys.pressed) {
@@ -281,6 +285,7 @@ class Player extends Characters {
             } else if (this.position.x % 48 != 0) {
                 key = this.lastKeys.x;
             }
+
             if (key === "ArrowLeft" && !(this.position.x <= 0)) {
                 this.velocity.x = -1;
             } else if (
@@ -302,11 +307,21 @@ class Player extends Characters {
                 this.velocity.x = 0;
                 this.velocity.y = 0;
             }
+            if (eneMap[eneY + 1][eneX] == 3) {
+                if(this.velocity.y >0)
+                this.velocity.y = 0;
+            }
+            if (eneMap[eneY][eneX +1] == 3) {
+                if (this.velocity.x > 0) this.velocity.x = 0; 
+            }
+            if (eneMap[eneY][eneX2 - 1] == 3) { 
+                if (this.velocity.x < 0) this.velocity.x = 0;
+            }
             this.position.y += this.velocity.y;
             this.position.x += this.velocity.x;
         }
         this.drawBoy(this.change, this.direction);
-        this.attack();
+        this.attack(eneMap);
     }
 }
 export default Player;
