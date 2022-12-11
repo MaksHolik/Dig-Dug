@@ -371,14 +371,14 @@ class Player extends Characters {
             }
 
             if (key === "ArrowLeft" && !(this.position.x <= 0)) {
-                this.velocity.x = -1;
+                this.velocity.x = -2;
             } else if (
                 key === "ArrowRight" &&
                 !(this.position.x + this.dimensions.width >= this.canvas.width)
             ) {
-                this.velocity.x = 1;
+                this.velocity.x = 2;
             } else if (key === "ArrowUp" && !(this.position.y <= 96)) {
-                this.velocity.y = -1;
+                this.velocity.y = -2;
             } else if (
                 key === "ArrowDown" &&
                 !(
@@ -386,7 +386,7 @@ class Player extends Characters {
                     this.canvas.height
                 )
             ) {
-                this.velocity.y = 1;
+                this.velocity.y = 2;
             } else if (this.lastKey == "z") {
                 this.velocity.x = 0;
                 this.velocity.y = 0;
