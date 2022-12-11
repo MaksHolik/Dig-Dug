@@ -142,7 +142,7 @@ class Game {
             this.ctx?.drawImage(this.namco, 120, 400, 400, 100);
             setTimeout(() => {
                 this.render();
-            }, 5000);
+            }, 2000);
         }, 1000);
     };
     backToStart: any = async () => {
@@ -182,7 +182,27 @@ class Game {
     };
     checkIfGameOver() {
         if (this.ui.hpCounter == 0) {
-            location.reload();
+            this.flag = false;
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            setTimeout(() => {
+                new Text({
+                    color: "red",
+                    size: 30,
+                    position: { left: 200, top: 400 },
+                    text: "GAME OVER",
+                    ctx: this.ctx,
+                });
+                new Text({
+                    color: "red",
+                    size: 30,
+                    position: { left: 230, top: 430 },
+                    text: "LOSER :)",
+                    ctx: this.ctx,
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            }, 1000);
             return false;
         }
         return true;
