@@ -55,7 +55,6 @@ class Game {
             this.canvas,
             this.ctx,
             "./boy.png",
-            this.hpCounter
         );
         this.loadEntities();
         if (this.player) console.log("istnieje");
@@ -192,7 +191,7 @@ class Game {
         this.ui.draw(this.roundNumber);
         this.rocks.forEach((e) => e.update(this.map, this.eneMap));
         this.enemies = this.enemies.filter(
-            (e) => !e.update(this.eneMap, this.ui)
+            (e) => !e.update(this.ui)
         );
         this.player.update(this.eneMap, this.ui, this.enemies, this.map);
         this.searchForCollision();

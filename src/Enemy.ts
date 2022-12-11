@@ -24,10 +24,7 @@ class Enemy extends Characters {
         this.velocity = { x: 0, y: 0 };
         
     }
-    attack = async () => {
-        const posX = this.position.x + this.dimensions.height / 2;
-        const posY = this.position.y + this.dimensions.width / 2;
-    };
+
 
     getPixelColor = (x: number, y: number, data: Uint8ClampedArray) => {
         const red = y * (this.canvas.width * 4) + x * 4;
@@ -40,7 +37,7 @@ class Enemy extends Characters {
         return {x, y}
     };
 
-    update(eneMap: number[][], ui: UI) {
+    update(ui: UI) {
         
         if (this.hp > 0) {
             this.drawEnemy();

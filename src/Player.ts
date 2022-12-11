@@ -1,7 +1,6 @@
 import { dimensions, position } from "./interfaces";
 import Characters from "./Characters";
 import UI from "./UI";
-import Game from "./Game";
 import Enemy from "./Enemy";
 
 class Player extends Characters {
@@ -26,7 +25,6 @@ class Player extends Characters {
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D | null,
         url: string,
-        hp: number
     ) {
         super(dimensions, position, ctx, url);
         this.url = url;
@@ -34,12 +32,6 @@ class Player extends Characters {
         this.attacks = false;
         this.lastKey = "";
         this.velocity = { x: 0, y: 0 };
-        // this.keys = {
-        //   leftArrow: { pressed: false },
-        //   rightArrow: { pressed: false },
-        //   upArrow: { pressed: false },
-        //   downArrow: { pressed: false },
-        // };
         this.newKeys = {
             pressed: false,
         };
