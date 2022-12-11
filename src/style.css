@@ -7,9 +7,21 @@
 }
 body {
   background-color: black;
-  color: white;
+  color: white;position: absolute;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 0);
 }
 canvas{
+  
   border: 2px solid grey;
   font-family: "Atari";
+}
+#dig {
+  width: 500px;
+  image-rendering: pixelated;
+}
+#joy {
+  width: 200px;
+  image-rendering: pixelated;
 }

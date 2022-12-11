@@ -24,7 +24,7 @@ class Player extends Characters {
         position: position,
         canvas: HTMLCanvasElement,
         ctx: CanvasRenderingContext2D | null,
-        url: string,
+        url: string
     ) {
         super(dimensions, position, ctx, url);
         this.url = url;
