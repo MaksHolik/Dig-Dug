@@ -49,7 +49,12 @@ class Player extends Characters {
         };
         this.movePlayer();
     }
-    attack = async (eneMap: number[][], ui: UI, enemies: Enemy[]) => {
+    attack = async (
+        eneMap: number[][],
+        ui: UI,
+        enemies: Enemy[],
+        map: number[][]
+    ) => {
         const posX = this.position.x + this.dimensions.height / 2;
         const posY = this.position.y + this.dimensions.width / 2;
 
@@ -69,12 +74,19 @@ class Player extends Characters {
                     );
                     const enePosY = Math.floor(this.position.y / 48);
                     const myPosX = Math.floor(this.position.x / 48);
+                    const myPosY = Math.floor(this.position.y / 48);
+
                     enemies.forEach((e) => {
                         const { x, y } = e.getPos();
-                        if (enePosX < x && enePosY == y && x < myPosX) {
+                        if (
+                            enePosX <= x &&
+                            enePosY == y &&
+                            x < myPosX &&
+                            !(map[myPosY][myPosX - 1] === 1)
+                        ) {
                             eneMap[enePosY][enePosX + i] = 0;
                             enemies.splice(enemies.indexOf(e), 1);
-                            ui.points += 500;
+                            ui.points += 250;
                         }
                     });
                     currentX = posX - this.dimensions.width * i;
@@ -111,16 +123,22 @@ class Player extends Characters {
             } else if (this.direction == "ArrowRight") {
                 for (let i = 1; i <= 3; i++) {
                     const enePosX = Math.floor(
-                        (this.position.x - 3 * this.dimensions.width) / 48
+                        (this.position.x + 3 * this.dimensions.width) / 48
                     );
                     const enePosY = Math.floor(this.position.y / 48);
                     const myPosX = Math.floor(this.position.x / 48);
+                    const myPosY = Math.floor(this.position.y / 48);
                     enemies.forEach((e) => {
                         const { x, y } = e.getPos();
-                        if (enePosX < x && enePosY == y && x > myPosX) {
+                        if (
+                            enePosX > x &&
+                            enePosY == y &&
+                            x > myPosX &&
+                            map[myPosY][myPosX + 1] !== 1
+                        ) {
                             eneMap[enePosY][enePosX + i] = 0;
                             enemies.splice(enemies.indexOf(e), 1);
-                            ui.points += 500;
+                            ui.points += 250;
                         }
                     });
                     currentX = posX + this.dimensions.width * i;
@@ -160,12 +178,18 @@ class Player extends Characters {
                         (this.position.y - 3 * this.dimensions.width) / 48
                     );
                     const myPosY = Math.floor(this.position.y / 48);
+                    const myPosX = Math.floor(this.position.x / 48);
                     enemies.forEach((e) => {
                         const { x, y } = e.getPos();
-                        if (enePosX == x && enePosY < y && y < myPosY) {
+                        if (
+                            enePosX == x &&
+                            enePosY < y &&
+                            y < myPosY &&
+                            !(map[myPosY - 1][myPosX] === 1)
+                        ) {
                             eneMap[enePosY + i][enePosX] = 0;
                             enemies.splice(enemies.indexOf(e), 1);
-                            ui.points += 500;
+                            ui.points += 250;
                         }
                     });
                     currentX = posX;
@@ -202,15 +226,21 @@ class Player extends Characters {
                 for (let i = 1; i <= 3; i++) {
                     const enePosX = Math.floor(this.position.x / 48);
                     const enePosY = Math.floor(
-                        (this.position.y - 3 * this.dimensions.width) / 48
+                        (this.position.y + 3 * this.dimensions.width) / 48
                     );
                     const myPosY = Math.floor(this.position.y / 48);
+                    const myPosX = Math.floor(this.position.x / 48);
                     enemies.forEach((e) => {
                         const { x, y } = e.getPos();
-                        if (enePosX == x && enePosY < y && y > myPosY) {
+                        if (
+                            enePosX == x &&
+                            enePosY >= y &&
+                            y > myPosY &&
+                            !(map[myPosY + 1][myPosX] === 1)
+                        ) {
                             eneMap[enePosY + i][enePosX] = 0;
                             enemies.splice(enemies.indexOf(e), 1);
-                            ui.points += 500;
+                            ui.points += 250;
                         }
                     });
                     currentX = posX;
@@ -329,7 +359,12 @@ class Player extends Characters {
         });
     };
 
-    update(eneMap: number[][], ui: UI, enemies: Enemy[]): void {
+    update(
+        eneMap: number[][],
+        ui: UI,
+        enemies: Enemy[],
+        map: number[][]
+    ): void {
         let key = this.lastKey;
         let eneX = Math.floor(this.position.x / 48);
         let eneY = Math.floor(this.position.y / 48);
@@ -377,7 +412,7 @@ class Player extends Characters {
             this.position.x += this.velocity.x;
         }
         this.drawBoy(this.change, this.direction);
-        this.attack(eneMap, ui, enemies);
+        this.attack(eneMap, ui, enemies, map);
     }
 }
 export default Player;

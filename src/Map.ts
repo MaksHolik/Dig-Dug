@@ -86,8 +86,7 @@ class Map {
 
                     if (
                         map[j][i] == 0 &&
-                        ((!map[j][i - 1] || map[j][i - 1]) == 1 ||
-                            (!map[j][i - 1] || map[j][i - 1]) == 3) &&
+                        ((!map[j][i - 1] || map[j][i - 1]) == 1) &&
                         (!map[j][i + 1] || map[j][i + 1] == 0) &&
                         (!map[j + 1] || map[j + 1][i] == 0) &&
                         (!map[j - 1] || map[j - 1][i] == 0)
@@ -102,8 +101,7 @@ class Map {
                     } else if (
                         map[j][i] == 0 &&
                         (!map[j][i - 1] || map[j][i - 1] == 0) &&
-                        ((!map[j][i + 1] || map[j][i + 1]) == 1 ||
-                            (!map[j][i + 1] || map[j][i + 1]) == 3) &&
+                        ((!map[j][i + 1] || map[j][i + 1]) == 1) &&
                         (!map[j + 1] || map[j + 1][i] == 0) &&
                         (!map[j - 1] || map[j - 1][i] == 0)
                     ) {
@@ -119,8 +117,8 @@ class Map {
                         (!map[j][i - 1] || map[j][i - 1] == 0) &&
                         (!map[j][i + 1] || map[j][i + 1] == 0) &&
                         (!map[j + 1] || map[j + 1][i] == 0) &&
-                        map[j - 1][i] == 1 &&
-                        map[j - 1][i] != 3
+                        map[j - 1][i] == 1
+                        
                     ) {
                         this.smallDraw(
                             this.onlyTop,
@@ -133,8 +131,7 @@ class Map {
                         (map[j][i] == 0,
                         (!map[j][i - 1] || map[j][i - 1] == 0) &&
                             (!map[j][i + 1] || map[j][i + 1] == 0) &&
-                            ((!map[j + 1] || map[j + 1][i]) == 1 ||
-                                (!map[j + 1] || map[j + 1][i]) == 3) &&
+                            ((!map[j + 1] || map[j + 1][i]) == 1) &&
                             (!map[j - 1] || map[j - 1][i] == 0))
                     ) {
                         this.smallDraw(
@@ -149,8 +146,7 @@ class Map {
                         map[j][i] == 0 &&
                         map[j][i - 1] == 0 &&
                         map[j][i + 1] == 0 &&
-                        ((!map[j + 1] || map[j + 1][i]) == 1 ||
-                            (!map[j + 1] || map[j + 1][i]) == 3) &&
+                        ((!map[j + 1] || map[j + 1][i]) == 1) &&
                         (!map[j - 1] || map[j - 1][i]) == 1
                     ) {
                         this.smallDraw(
@@ -164,8 +160,7 @@ class Map {
                         map[j][i] == 0 &&
                         map[j][i - 1] == 0 &&
                         map[j][i + 1] == 0 &&
-                        (!map[j + 1] || map[j + 1][i]) == 1 &&
-                        (!map[j - 1] || map[j - 1][i]) == 3
+                        (!map[j + 1] || map[j + 1][i]) == 1
                     ) {
                         this.smallDraw(
                             this.leftRight,
@@ -178,10 +173,8 @@ class Map {
                         map[j][i] == 0 &&
                         (!map[j + 1] || map[j + 1][i] == 0) &&
                         (!map[j - 1] || map[j - 1][i] == 0) &&
-                        ((!map[j][i - 1] || map[j][i - 1]) == 1 ||
-                            (!map[j][i - 1] || map[j][i - 1]) == 3) &&
-                        ((!map[j][i + 1] || map[j][i + 1]) == 1 ||
-                            (!map[j][i + 1] || map[j][i + 1]) == 3)
+                        ((!map[j][i - 1] || map[j][i - 1]) == 1) &&
+                        ((!map[j][i + 1] || map[j][i + 1]) == 1)
                     ) {
                         this.smallDraw(
                             this.topBottom,
@@ -196,8 +189,7 @@ class Map {
                         map[j][i] == 0 &&
                         (!map[j + 1] || map[j + 1][i] == 0) &&
                         (!map[j - 1] || map[j - 1][i] == 1) &&
-                        ((!map[j][i - 1] || map[j][i - 1]) == 1 ||
-                            (!map[j][i - 1] || map[j][i - 1]) == 3) &&
+                        ((!map[j][i - 1] || map[j][i - 1]) == 1) &&
                         (!map[j][i + 1] || map[j][i + 1] == 0)
                     ) {
                         this.smallDraw(
@@ -212,8 +204,7 @@ class Map {
                         (!map[j + 1] || map[j + 1][i] == 0) &&
                         (!map[j - 1] || map[j - 1][i]) == 1 &&
                         (!map[j][i + 1] || map[j][i - 1] == 0) &&
-                        ((!map[j][i + 1] || map[j][i + 1]) == 1 ||
-                            (!map[j][i + 1] || map[j][i + 1]) == 3)
+                        ((!map[j][i + 1] || map[j][i + 1]) == 1)
                     ) {
                         this.smallDraw(
                             this.leftBottom,
@@ -226,12 +217,10 @@ class Map {
 
                     if (
                         map[j][i] == 0 &&
-                        ((!map[j + 1] || map[j + 1][i]) == 1 ||
-                            (!map[j + 1] || map[j + 1][i]) == 3) &&
+                        ((!map[j + 1] || map[j + 1][i]) == 1) &&
                         (!map[j - 1] || map[j - 1][i] == 0) &&
                         (!map[j][i + 1] || map[j][i - 1] == 0) &&
-                        ((!map[j][i + 1] || map[j][i + 1]) == 1 ||
-                            (!map[j][i + 1] || map[j][i + 1]) == 3)
+                        ((!map[j][i + 1] || map[j][i + 1]) == 1)
                     ) {
                         this.smallDraw(
                             this.rightTop,
@@ -244,10 +233,8 @@ class Map {
                     if (
                         map[j][i] == 0 &&
                         (!map[j][i - 1] || map[j][i - 1] == 0) &&
-                        ((!map[j][i + 1] || map[j][i + 1]) == 1 ||
-                            (!map[j][i + 1] || map[j][i + 1]) == 3) &&
-                        ((!map[j + 1] || map[j + 1][i]) == 1 ||
-                            (!map[j + 1] || map[j + 1][i]) == 3) &&
+                        ((!map[j][i + 1] || map[j][i + 1]) == 1) &&
+                        ((!map[j + 1] || map[j + 1][i]) == 1) &&
                         (!map[j - 1] || map[j - 1][i] == 0)
                     ) {
                         this.smallDraw(
@@ -261,9 +248,9 @@ class Map {
 
                     if (
                         map[j][i] == 0 &&
-                        (map[j][i - 1] == 1 || map[j][i - 1] == 3) &&
-                        (map[j][i + 1] == 1 || map[j][i + 1] == 3) &&
-                        (map[j - 1][i] == 1 || map[j - 1][i] == 3) &&
+                        (map[j][i - 1] == 1) &&
+                        (map[j][i + 1] == 1) &&
+                        (map[j - 1][i] == 1) &&
                         map[j + 1][i] == 0 // tutaj skończyłem
                     ) {
                         if (
@@ -283,13 +270,9 @@ class Map {
                         (!map[j + 1] || map[j + 1][i] == 1) &&
                         (!map[j - 1] || map[j - 1][i] == 0) &&
                         (!map[j][i + 1] ||
-                            map[j][i - 1] == 1 ||
-                            !map[j][i + 1] ||
-                            map[j][i - 1] == 3) &&
+                            map[j][i - 1] == 1) &&
                         (!map[j][i + 1] ||
-                            map[j][i] + 1 == 1 ||
-                            !map[j][i + 1] ||
-                            map[j][i] + 1 == 3)
+                            map[j][i] + 1 == 1)
                     ) {
                         this.smallDraw(
                             this.freeTop,
@@ -302,10 +285,10 @@ class Map {
                         map[j - 1] &&
                         map[j + 1] &&
                         map[j][i] == 0 &&
-                        (map[j][i - 1] == 1 || map[j][i - 1] == 3) &&
+                        (map[j][i - 1] == 1) &&
                         map[j][i + 1] == 0 &&
-                        (map[j + 1][i] == 1 || map[j + 1][i] == 3) &&
-                        (map[j - 1][i] == 1 || map[j - 1][i] == 3)
+                        (map[j + 1][i] == 1) &&
+                        (map[j - 1][i] == 1)
                     ) {
                         this.smallDraw(
                             this.freeRight,
@@ -317,15 +300,11 @@ class Map {
                     } else if (
                         map[j][i] == 0 &&
                         (!map[j + 1] ||
-                            map[j + 1][i] == 1 ||
-                            !map[j + 1] ||
-                            map[j + 1][i] == 3) &&
+                            map[j + 1][i] == 1) &&
                         (!map[j - 1] || map[j - 1][i] == 1) &&
                         (!map[j][i + 1] || map[j][i - 1] == 0) &&
                         (!map[j][i + 1] ||
-                            map[j][i] + 1 == 1 ||
-                            !map[j][i + 1] ||
-                            map[j][i] + 1 == 3)
+                            map[j][i] + 1 == 1)
                     ) {
                         this.smallDraw(
                             this.freeLeft,
@@ -339,9 +318,7 @@ class Map {
                         (!map[j][i - 1] || map[j][i - 1] == 0) &&
                         (!map[j][i + 1] || map[j][i + 1] == 0) &&
                         (!map[j + 1] ||
-                            map[j + 1][i] == 1 ||
-                            !map[j + 1] ||
-                            map[j + 1][i] == 3) &&
+                            map[j + 1][i] == 1) &&
                         map[j - 1][i] == 2
                     ) {
                         this.smallDraw(

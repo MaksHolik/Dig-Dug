@@ -96,8 +96,6 @@ abstract class Characters {
         }else if (change ==1) {
             rockk = this.theRock4
         }
-        
-        
        this.ctx!.drawImage(
            rockk,
            this.position.x,
@@ -106,7 +104,7 @@ abstract class Characters {
            this.dimensions.height
        );
     };
-    drawEnemy = async () => {
+    drawEnemy = async () => {       
         this.ctx!.drawImage(
             this.enemy,
             this.position.x,

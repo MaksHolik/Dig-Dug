@@ -11,6 +11,7 @@ class Rock extends Characters {
     flag: boolean;
     falls: boolean;
     shouldFall: number;
+    test: boolean;
     constructor(
         dimensions: dimensions,
         position: position,
@@ -26,6 +27,7 @@ class Rock extends Characters {
         this.falls = false;
         this.flag = false;
         this.shouldFall = 0;
+        this.test = false
     }
     attack = async () => {};
 
@@ -33,9 +35,11 @@ class Rock extends Characters {
         const x = this.position.x / 48;
         const y = this.position.y / 48;
         if (this.position.x < 0 || this.position.y < 0) return;
-        if (this.shouldFall === 0 && map[y + 1] && map[y + 1][x] == 0) {
+        if (this.shouldFall === 0 && map[y + 1] && map[y + 1][x] == 0 && !this.test) {
+            this.test = true
             this.shouldFall = 1;
             setTimeout(() => {
+                this.test = false
                 this.shouldFall = 2;
             }, 1000);
         }
@@ -43,10 +47,7 @@ class Rock extends Characters {
             if (
                 !this.counterDest &&
                 this.flag &&
-                (!map[y + 1] ||
-                    map[y + 1][x] == 1 ||
-                    !map[y + 1] ||
-                    eneMap[y + 1][x] == 3)
+                (!map[y + 1] || map[y + 1][x] == 1 )
             ) {
                 this.shouldFall = 3;
                 this.falls = false;
@@ -62,7 +63,7 @@ class Rock extends Characters {
                         this.position.y = -48;
                     }
                 }, 250);
-            } else {
+            } else{
                 this.falls = true;
                 map[y][x] = 0;
                 eneMap[y][x] = 0;
@@ -75,9 +76,10 @@ class Rock extends Characters {
                     if (this.counter == 0) clearInterval(this.interval);
                 }, 50);
             }
-        }
-
-        this.drawRocks(this.counterDest);
+            
+        } 
+            this.drawRocks(this.counterDest);
+        
     }
 }
 export default Rock;

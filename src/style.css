@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Atari Classic";
-  src: local("Atari"), url("../public/AtariClassic.ttf")
+  src: url("../public/AtariClassic.ttf")
 }
 * {
   font-family: AtariClassic ;
